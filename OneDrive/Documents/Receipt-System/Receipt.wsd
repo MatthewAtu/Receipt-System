@@ -1,0 +1,88 @@
+@startuml Receipt
+' plant UML is requiered to run this diagram
+skinparam groupInheritance 4
+
+class Receipt{
+    -s:Store
+    -c:Customer
+    -Boughtitems: ArrayList<Item>
+    #TAX:final double 
+
+    +Receipt()
+    +Receipt(s:Store, c:Customer, items:Item, payment:Payment)
+    +setStore(Store)
+    +getStore():Store
+    +setCustomer(Customer)
+    +getCustomer():Customer
+    +additem(Item) 
+    +getItems():ArrayList<Item>
+    +clearItems():void
+    +total():double
+    +calculatetotal():void
+}
+class ReceiptSystem{
+    +{static} main(args: String[]):void
+    -{static} findCustomerByName(ArrayList<Customer>, String):Customer
+    -{static} findStoreByName(ArrayList<Store>, String):Store
+}
+class Customer{
+    -CustomerName:String
+    -storedrec2:ArrayList<Receipt>
+    
+    +Customer(name:String)
+    +addReceipt(Receipt):void 
+    +getName():String
+    +viewreceipts():void
+    +GenerateReports():void
+}
+class Item {
+    -itemNameC: String
+    -theprice:double
+    -thequantity:int
+    
+    +Item(itemName:String, price:double , quantity:int )
+    +getItemName():String
+    +getPrice():double
+    +GetQuantity():int
+}
+class Store{
+    -Store:String
+    -storedrec1:ArrayList<Receipts>
+
+    +addReceipt(Receipt):void 
+    +getName():String 
+    +viewReceipts():void 
+    +GenerateReports():void 
+}
+abstract class Payment{
+    -amount:double
+    #type:String
+    #name:String
+
+    +Payment(amount:double)
+    +setAmount(double):void
+    +getAmount():double
+    +getName():String
+    +getType():String
+}
+
+class Cash{
+    +cash(amount:double, name:String)
+    +getName():String 
+}
+
+class Card{
+    +cash(amount:double, type:String)
+    +getType():String 
+}
+
+ReceiptSystem --> Receipt : manages
+ReceiptSystem --> Payment : manages
+Receipt <|-- Customer 
+Receipt <|-- Item
+Receipt <|-- Store
+Payment <|-- Cash
+Payment <|-- Card
+
+
+@enduml
